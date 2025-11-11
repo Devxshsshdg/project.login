@@ -1,3 +1,32 @@
+<?php
+session_start();
+
+// cek apakah user sudah login
+if (isset($_SESSION['username']) && isset($_SESSION['role'])) {
+    header("Location: dashboard.php");
+    exit();
+}
+
+// Proses login saat form dikirim
+if ($_SERVER["REQUEST_METHOD"] == 'POST') {
+    $username = $_POST['username'] ?? '';
+    $password = $_POST['password'] ?? '';
+
+    // login sederhana (username: dina, password: 123)
+    if ($username === "dina" && $password === "123") {
+        // Set session variables
+        $_SESSION['username'] = $username;
+        $_SESSION['role'] = 'mahasiswi';
+        $_SESSION['login_time'] = time();
+        
+        
+        header("Location: dashboard.php");
+        exit();
+    } else {
+        $error = "Username atau password salah!";
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
